@@ -13,42 +13,36 @@ class Auto{
     var velocidad : Velocidades
     
     init(){
-        velocidad = velocidad.dynamicType.init(velocidadInicial: Velocidades.Apagado)
+        velocidad = Velocidades(velocidadInicial: Velocidades.Apagado)
     }
     
     func cambioDeVelocidad( ) -> ( actual : Int, velocidadEnCadena: String){
-        var velocidadCadena = ""
-        switch velocidad {
-        case Velocidades.Apagado:
-            velocidadCadena = "Apagado"
-        case Velocidades.VelocidadBaja:
-            velocidadCadena = "Baja"
-        case Velocidades.VelocidadMedia:
-            velocidadCadena =  "Media"
-        case Velocidades.VelocidadAlta:
-            velocidadCadena =  "Alta"
-        default: ""
+        
+        let retorno = (actual:velocidad.rawValue, velocidadEnCadena:String(velocidad))
+        
+        if(velocidad==Velocidades.VelocidadAlta){
+            velocidad=Velocidades.VelocidadMedia
+            
+        }else if(velocidad==Velocidades.VelocidadMedia){
+            velocidad=Velocidades.VelocidadAlta
+            
+        }else if(velocidad==Velocidades.VelocidadBaja){
+            velocidad=Velocidades.VelocidadMedia
+            
+        }else if(velocidad==Velocidades.Apagado){
+            velocidad=Velocidades.VelocidadBaja
         }
         
-        return (velocidad.rawValue, "Velocidad \(velocidadCadena)")
+        return retorno
     }
 }
 
 
 var auto = Auto()
+var a = Velocidades(velocidadInicial: .Apagado)
 
 for i in 1...20{
     let resultado = auto.cambioDeVelocidad()
     print("\(resultado.actual) \(resultado.velocidadEnCadena)")
-    
-    if auto.velocidad == Velocidades.Apagado {
-        auto.velocidad = Velocidades.VelocidadBaja
-    } else if auto.velocidad == Velocidades.VelocidadBaja {
-        auto.velocidad = Velocidades.VelocidadMedia
-    } else if auto.velocidad == Velocidades.VelocidadMedia {
-        auto.velocidad = Velocidades.VelocidadAlta
-    } else if auto.velocidad == Velocidades.VelocidadAlta {
-        auto.velocidad = Velocidades.VelocidadMedia
-    }
 }
 
